@@ -64,6 +64,3 @@ python hand_control.py
 *   **Camera Conflicts:** Windows only allows one app to use the camera at a time. Close Zoom/Teams if the program can't connect.
 *   **Lighting:** Works best in well-lit environments where hand landmarks are clearly visible.
 
----
-
-*Made with ❤️ by Antigravity*
