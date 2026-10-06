@@ -1,66 +1,83 @@
-# 🖐️ GestureGlide: Hand-Powered Media Control
+# GestureGlide
 
-Elevate your desktop experience with **GestureGlide**. Control your music, videos, and system volume using intuitive hand gestures through your webcam. No buttons, no touch—just pure motion.
+> **Status:** Prototype
 
----
+GestureGlide is a local, webcam-based media controller. It uses hand landmarks to recognize a small set of gestures and maps them to desktop media controls and volume adjustments.
 
-## ✨ Features
+## What it does
 
-*   **⚡ Instant Track Switching:** Swipe your fist left or right to skip songs.
-*   **🤏 Precision Pinch Volume:** Adjust volume by pinching your thumb and index finger.
-*   **👍 Quick Play/Pause:** A simple thumbs-up toggles your media.
-*   **👤 Smart Face-Rejection:** Uses dual-model detection to ensure your face never accidentally triggers a command.
-*   **📺 On-Screen HUD:** Real-time visual feedback and gesture status.
+- Swipe a closed fist left or right to move to the previous or next track.
+- Pinch the thumb and index finger to adjust system volume.
+- Hold a thumbs-up gesture to toggle play/pause.
+- Display a live heads-up display with the detected gesture and control state.
 
----
+## Technical approach
 
-## 🎮 Gesture Map
-
-| Gesture | Action | Description |
-| :--- | :--- | :--- |
-| **✊ Swipe Left** | `⏮️ Previous` | Swipe a closed fist to the left. |
-| **✊ Swipe Right**| `⏭️ Next` | Swipe a closed fist to the right. |
-| **🤏 Pinch** | `🔊 Volume` | Fold Middle, Ring, & Pinky. Move Thumb + Index to adjust. |
-| **👍 Thumbs Up** | `⏯️ Play/Pause` | Hold a thumb up to toggle media. |
-
----
-
-## 🚀 Quick Start
-
-### 1. Requirements
-Ensure you have Python 3.9+ installed and a working webcam.
-
-### 2. Setup Environment
-```bash
-# Create a virtual environment
-python -m venv venv
-
-# Activate it
-# On Windows:
-.\venv\Scripts\activate
-# On Mac/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+```text
+Webcam frame
+  → hand landmark detection (MediaPipe)
+  → gesture rules and temporal checks
+  → media / volume automation
+  → on-screen feedback (OpenCV)
 ```
 
-### 3. Run
+The prototype uses:
+
+- [OpenCV](https://opencv.org/) for frame capture and display
+- [MediaPipe](https://mediapipe.dev/) for hand tracking
+- [PyAutoGUI](https://pyautogui.readthedocs.io/) for OS-level input automation
+
+## Quick start
+
+**Requirements:** Python 3.9+ and a working webcam.
+
 ```bash
+python -m venv venv
+```
+
+Activate the environment:
+
+```bash
+# Windows
+.\venv\Scripts\activate
+
+# macOS / Linux
+source venv/bin/activate
+```
+
+Install dependencies and start the controller:
+
+```bash
+pip install -r requirements.txt
 python hand_control.py
 ```
 
----
+## Gesture map
 
-## 🛠️ Built With
+| Gesture | Action |
+| --- | --- |
+| Closed-fist swipe left | Previous track |
+| Closed-fist swipe right | Next track |
+| Thumb–index pinch | Volume control |
+| Thumbs up | Play/pause |
 
-*   [**OpenCV**](https://opencv.org/) - Computer Vision foundation.
-*   [**MediaPipe**](https://mediapipe.dev/) - State-of-the-art hand tracking.
-*   [**PyAutoGUI**](https://pyautogui.readthedocs.io/) - Seamless OS-level automation.
+## Limitations
 
----
+- Gesture recognition is sensitive to lighting, camera placement, occlusion, and landmark-tracking quality.
+- Media-key behavior depends on the operating system and its active media application.
+- This repository is a prototype, not a benchmarked gesture-recognition system.
+- Close other applications using the webcam before starting it.
 
-## ⚠️ Notes
-*   **Camera Conflicts:** Windows only allows one app to use the camera at a time. Close Zoom/Teams if the program can't connect.
-*   **Lighting:** Works best in well-lit environments where hand landmarks are clearly visible.
+## Possible next steps
 
+- Measure latency and recognition reliability across lighting conditions and users.
+- Add configurable gesture thresholds and a calibration flow.
+- Separate recognition from OS automation to make the pipeline easier to test.
+
+## Privacy
+
+The application is intended to process webcam frames locally. Review the source and installed dependencies before use.
+
+## License
+
+No license has been selected yet. Please contact the repository owner before reusing the code.
